@@ -1,0 +1,4 @@
+name: ClimbableChain
+version: '${version}'
+main: cn.encmys.ykdz.forest.climbablechain.ClimbableChain
+api-version: '1.15'
