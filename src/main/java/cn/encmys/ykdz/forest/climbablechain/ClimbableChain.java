@@ -6,7 +6,7 @@ public final class ClimbableChain extends JavaPlugin {
 
     @Override
     public void onEnable() {
-
+        getLogger().info("Enabling ClimbableChain...");
     }
 
     @Override
