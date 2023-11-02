@@ -10,6 +10,8 @@ name: Gradle Build
 on:
   push:
     branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 jobs:
   build:
@@ -58,3 +60,37 @@ jobs:
       with:
         name: ClimbableChain Artifact
         path: build/libs/*.jar
+
+    - name: Get info from gradle
+      id: get_info
+      run: |
+        VERSION=`grep version build.gradle | grep '=' | grep -Eo \'.*\' | grep -Eo '[a-z|A-Z|0-9|.|_]*'`
+        NAME=`grep "rootProject.name" settings.gradle | grep -Eo \'.*\' | grep -Eo '[a-z|A-Z|0-9|.|_]*'`
+        FILE_PATH="./build/libs/"$NAME"-"$VERSION".jar"
+        FILE_NAME=$NAME"-"$VERSION".jar"
+        VERSION=$VERSION.`git rev-parse --short HEAD`
+        echo ::set-output name=file_path::$FILE_PATH
+        echo ::set-output name=file_name::$FILE_NAME
+        echo ::set-output name=version::$VERSION
+
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@master
+      env:
+        GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+      with:
+        tag_name: Release_${{steps.get_info.outputs.version}}
+        release_name: Release ${{steps.get_info.outputs.version}}
+        draft: true
+        prerelease: false
+
+    - name: Upload Release Asset
+      id: upload-release-asset
+      uses: actions/upload-release-asset@master
+      env:
+        GITHUB_TOKEN: ${{secrets.RELEASE_TOKEN}}
+      with:
+        asset_path: ${{steps.get_info.outputs.file_path}}
+        upload_url: ${{steps.create_release.outputs.upload_url}}
+        asset_name: ${{steps.get_info.outputs.file_name}}
+        asset_content_type: application/java-archive
