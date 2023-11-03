@@ -48,6 +48,12 @@ public class ClimbManager implements Listener {
         return climbTaskMap.get(uuid);
     }
 
+    public void cancelClimb(UUID uuid, boolean eject) {
+        ClimbTask task = getClimbTask(uuid);
+        task.cancelClimbTask(eject);
+        this.removeClimbTask(uuid);
+    }
+
     public void cancelClimb(ClimbTask task, boolean eject) {
         UUID uuid = task.getClimbingPlayer().getUniqueId();
         task.cancelClimbTask(eject);
