@@ -1,5 +1,6 @@
 package cn.encmys.ykdz.forest.climbablechain.manager;
 
+import cn.encmys.ykdz.forest.climbablechain.ClimbableChain;
 import cn.encmys.ykdz.forest.climbablechain.player.ClimbingPlayer;
 import cn.encmys.ykdz.forest.climbablechain.task.ClimbTask;
 import cn.encmys.ykdz.forest.climbablechain.utils.BlockUtils;
@@ -46,7 +47,7 @@ public class ClimbManager implements Listener {
         }
     }
 
-    public  void removeClimbingPlayer(Player player) {
+    public void removeClimbingPlayer(Player player) {
         UUID uuid = player.getUniqueId();
         climbingPlayerMap.remove(uuid);
     }
