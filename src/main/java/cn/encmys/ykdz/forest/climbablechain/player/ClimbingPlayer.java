@@ -1,13 +1,10 @@
 package cn.encmys.ykdz.forest.climbablechain.player;
 
-import cn.encmys.ykdz.forest.climbablechain.ClimbableChain;
 import cn.encmys.ykdz.forest.climbablechain.data.ChainData;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
 import java.util.ArrayList;

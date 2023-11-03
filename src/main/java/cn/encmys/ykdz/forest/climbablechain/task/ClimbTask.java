@@ -35,7 +35,7 @@ public class ClimbTask extends BukkitRunnable {
                 return;
             }
         }
-        climbManager.cancelClimb(this, true);
+        climbManager.cancelClimb(this, false);
     }
 
     public void cancelClimbTask(boolean eject) {

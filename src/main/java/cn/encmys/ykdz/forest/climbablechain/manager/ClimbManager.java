@@ -3,7 +3,6 @@ package cn.encmys.ykdz.forest.climbablechain.manager;
 import cn.encmys.ykdz.forest.climbablechain.player.ClimbingPlayer;
 import cn.encmys.ykdz.forest.climbablechain.task.ClimbTask;
 import cn.encmys.ykdz.forest.climbablechain.utils.BlockUtils;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
