@@ -71,7 +71,7 @@ public class ClimbingPlayer {
     public void stop(boolean eject) {
         player.setGravity(true);
         if(eject) {
-            player.setVelocity(player.getLocation().getDirection().add(new Vector(0, 0.5, 0)).normalize().multiply(-0.5));
+            player.setVelocity(player.getLocation().getDirection().add(new Vector(0, 1, 0)).normalize().multiply(-0.5));
         }
     }
 
