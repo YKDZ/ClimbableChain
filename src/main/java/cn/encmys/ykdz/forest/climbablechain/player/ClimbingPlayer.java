@@ -45,11 +45,11 @@ public class ClimbingPlayer {
         switch (this.mode) {
             case UP:
                 moveUp();
-                player.playSound(player.getLocation(), Sound.BLOCK_LADDER_STEP, 1, 1);
+                player.playSound(player.getLocation(), Sound.BLOCK_CHAIN_STEP, 1, 1);
                 break;
             case DOWN:
                 moveDown();
-                player.playSound(player.getLocation(), Sound.BLOCK_LADDER_STEP, 1, 1);
+                player.playSound(player.getLocation(), Sound.BLOCK_CHAIN_STEP, 1, 1);
                 break;
             case STOP:
                 moveStop();
@@ -61,7 +61,7 @@ public class ClimbingPlayer {
     }
 
     public void moveDown() {
-        player.setVelocity(new Vector(0, -0.2, 0));
+        player.setVelocity(new Vector(0, -0.25, 0));
     }
 
     public void moveStop() {
