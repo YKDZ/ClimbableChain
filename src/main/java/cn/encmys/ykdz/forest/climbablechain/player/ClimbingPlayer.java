@@ -16,7 +16,7 @@ import java.util.UUID;
 public class ClimbingPlayer {
     protected Player player;
     protected ChainData chainData;
-    protected ClimbMode mode = ClimbMode.UP;
+    protected ClimbMode mode;
 
     public ClimbingPlayer(Player player, Block firstChain) {
         this.player = player;
@@ -35,34 +35,46 @@ public class ClimbingPlayer {
 
     public void setUpDown() {
         float pitch = player.getLocation().getPitch();
-        this.mode = pitch < 0 ? ClimbMode.UP : ClimbMode.DOWN;
+        if(pitch > 30) {
+            this.mode = ClimbMode.DOWN;
+        } else if(pitch < -30) {
+            this.mode = ClimbMode.UP;
+        } else {
+            this.mode = ClimbMode.STOP;
+        }
     }
 
     public void applyUpDown() {
         switch (this.mode) {
             case UP:
-                ClimbableChain.getInstance().getLogger().info("apply up effect");
                 moveUp();
+                player.playSound(player.getLocation(), Sound.BLOCK_LADDER_STEP, 1, 1);
                 break;
             case DOWN:
-                ClimbableChain.getInstance().getLogger().info("apply down effect");
                 moveDown();
+                player.playSound(player.getLocation(), Sound.BLOCK_LADDER_STEP, 1, 1);
+                break;
+            case STOP:
+                moveStop();
         }
-        player.playSound(player.getLocation(), Sound.BLOCK_LADDER_STEP, 1, 1);
     }
 
     public void moveUp() {
-        player.setVelocity(new Vector(0, 0.6, 0));
+        player.setVelocity(new Vector(0, 0.1, 0));
     }
 
     public void moveDown() {
-        player.setVelocity(new Vector(0, -1, 0));
+        player.setVelocity(new Vector(0, -0.2, 0));
+    }
+
+    public void moveStop() {
+        player.setVelocity(new Vector(0, 0, 0));
     }
 
     public void stop(boolean eject) {
         player.setGravity(true);
         if(eject) {
-            player.setVelocity(player.getLocation().getDirection().multiply(-1));
+            player.setVelocity(player.getLocation().getDirection().add(new Vector(0, 0.5, 0)).normalize().multiply(-0.5));
         }
     }
 
@@ -80,6 +92,7 @@ public class ClimbingPlayer {
 
     public enum ClimbMode {
         UP,
-        DOWN
+        DOWN,
+        STOP
     }
 }
