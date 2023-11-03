@@ -10,23 +10,18 @@ public final class ClimbableChain extends JavaPlugin {
     private static ClimbManager climbManager;
 
     @Override
-    public void onLoad() {
-        getLogger().info("Loading ClimbableChain...");
-    }
-
-    @Override
     public void onEnable() {
         instance = this;
         climbManager = new ClimbManager();
 
         Bukkit.getPluginManager().registerEvents(climbManager, instance);
 
-        getLogger().info("Enabling ClimbableChain...");
+        getLogger().info("Successfully enabled ClimbableChain!");
     }
 
     @Override
     public void onDisable() {
-        getLogger().info("Disabling ClimbableChain...");
+        getLogger().info("Successfully disabled ClimbableChain!");
     }
 
     public static ClimbableChain getInstance() {
