@@ -3,12 +3,14 @@ package cn.encmys.ykdz.forest.climbablechain.utils;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
+import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class BlockUtils {
-    public static List<Block> getBlocksAround(Location center, int radius) {
+    public static List<Block> getBlocksInRadius(Location center, int radius) {
         World world = center.getWorld();
         int minX = center.getBlockX() - radius;
         int minY = center.getBlockY() - radius;
@@ -30,6 +32,22 @@ public class BlockUtils {
             }
         }
 
+        return blocks;
+    }
+
+    public static List<Block> getBlocksInFront(Player player, double distance) {
+        Location chestLoc = player.getEyeLocation().add(0, -0.2, 0);
+        World world = chestLoc.getWorld();
+        Vector vec = player.getLocation().getDirection().normalize().multiply(0.05);
+        ArrayList<Block> blocks = new ArrayList<>();
+        Block temp = null;
+        for(int i = 0; i * 0.05 < distance; i++) {
+            Block block = world.getBlockAt(chestLoc.add(vec));
+            if(block != temp) {
+                blocks.add(block);
+            }
+            temp = block;
+        }
         return blocks;
     }
 }

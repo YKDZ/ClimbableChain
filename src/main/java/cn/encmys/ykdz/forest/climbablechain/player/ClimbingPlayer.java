@@ -78,6 +78,10 @@ public class ClimbingPlayer {
         }
     }
 
+    public Player getPlayer() {
+        return player;
+    }
+
     public ChainData getChainData() {
         return chainData;
     }

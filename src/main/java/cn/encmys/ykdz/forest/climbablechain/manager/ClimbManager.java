@@ -29,8 +29,7 @@ public class ClimbManager implements Listener {
         Player player = e.getPlayer();
         UUID uuid = player.getUniqueId();
         if(e.isSneaking()) {
-            Location center = player.getLocation();
-            List<Block> nears = BlockUtils.getBlocksAround(center, 1);
+            List<Block> nears = BlockUtils.getBlocksInFront(player, 1);
 
             Iterator<Block> iterator = nears.iterator();
             while (iterator.hasNext()) {

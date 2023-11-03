@@ -7,13 +7,9 @@ import cn.encmys.ykdz.forest.climbablechain.player.ClimbingPlayer;
 import cn.encmys.ykdz.forest.climbablechain.utils.BlockUtils;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
-import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.UUID;
 
 public class ClimbTask extends BukkitRunnable {
 
@@ -30,7 +26,7 @@ public class ClimbTask extends BukkitRunnable {
     @Override
     public void run() {
         Location center = climbingPlayer.getLocation();
-        List<Block> nears = BlockUtils.getBlocksAround(center, 1);
+        List<Block> nears = BlockUtils.getBlocksInFront(climbingPlayer.getPlayer(), 1);
 
         for (Block near : nears) {
             ChainData chainData = climbingPlayer.getChainData();
