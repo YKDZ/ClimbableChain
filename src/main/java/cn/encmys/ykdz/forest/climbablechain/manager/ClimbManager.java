@@ -1,5 +1,6 @@
 package cn.encmys.ykdz.forest.climbablechain.manager;
 
+import cn.encmys.ykdz.forest.climbablechain.data.ChainData;
 import cn.encmys.ykdz.forest.climbablechain.player.ClimbingPlayer;
 import cn.encmys.ykdz.forest.climbablechain.task.ClimbTask;
 import cn.encmys.ykdz.forest.climbablechain.utils.BlockUtils;
@@ -8,6 +9,8 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
 
 import java.util.Iterator;
@@ -28,9 +31,9 @@ public class ClimbManager implements Listener {
         Player player = e.getPlayer();
         UUID uuid = player.getUniqueId();
         if(e.isSneaking()) {
-            List<Block> nears = BlockUtils.getBlocksInFront(player, 1);
+            List<Block> front = BlockUtils.getBlocksInFront(player, 1);
 
-            Iterator<Block> iterator = nears.iterator();
+            Iterator<Block> iterator = front.iterator();
             while (iterator.hasNext()) {
                 Block chain = iterator.next();
                 if (chain.getType() == Material.CHAIN) {
@@ -41,6 +44,29 @@ public class ClimbManager implements Listener {
         } else if(!e.isSneaking() && climbTaskMap.containsKey(uuid)) {
             ClimbTask task = this.getClimbTask(uuid);
             this.cancelClimb(task, true);
+        }
+    }
+
+    @EventHandler
+    public void onPlace(BlockPlaceEvent e) {
+        Block placed = e.getBlockPlaced();
+        Block against = e.getBlockAgainst();
+        for(ClimbTask task : climbTaskMap.values()) {
+            ChainData chainData = task.getClimbingPlayer().getChainData();
+            if((chainData.contains(placed.getLocation().getWorld().getBlockAt(placed.getLocation().add(0, -1, 0))) || chainData.contains(against))
+                    && placed.getType() == Material.CHAIN) {
+                task.getClimbingPlayer().updateChainData();
+            }
+        }
+    }
+
+    @EventHandler
+    public void onBreak(BlockBreakEvent e) {
+        Block broke = e.getBlock();
+        for(ClimbTask task : climbTaskMap.values()) {
+            if(task.getClimbingPlayer().getChainData().contains(broke)) {
+                task.getClimbingPlayer().updateChainData();
+            }
         }
     }
 

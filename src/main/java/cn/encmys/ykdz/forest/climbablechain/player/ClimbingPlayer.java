@@ -1,12 +1,15 @@
 package cn.encmys.ykdz.forest.climbablechain.player;
 
 import cn.encmys.ykdz.forest.climbablechain.data.ChainData;
+import cn.encmys.ykdz.forest.climbablechain.utils.BlockUtils;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
+import java.util.List;
 import java.util.UUID;
 
 public class ClimbingPlayer {
@@ -70,7 +73,7 @@ public class ClimbingPlayer {
     public void stop(boolean eject) {
         player.setGravity(true);
         if(eject) {
-            player.setVelocity(player.getLocation().getDirection().add(new Vector(0, 1, 0)).normalize().multiply(-0.5));
+            player.setVelocity(player.getFacing().getDirection().add(new Vector(0, -1 ,0)).normalize().multiply(-0.6));
         }
     }
 
@@ -88,6 +91,10 @@ public class ClimbingPlayer {
 
     public UUID getUniqueId() {
         return player.getUniqueId();
+    }
+
+    public void updateChainData() {
+        getChainData().update();
     }
 
     public enum ClimbMode {
